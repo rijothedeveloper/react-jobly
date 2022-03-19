@@ -3,10 +3,41 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { 
+  BrowserRouter,
+  Routes,
+  Route, 
+} from "react-router-dom";
+import Login from './login/Login';
+import SignUp from './signup/SignUp'
+import Profile from './profile/Profile'
+import Companies from './companies/Companies'
+import Jobs from './jobs/Jobs'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} > |{" "}
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<SignUp />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="companies" element={<Companies />} />
+            <Route path="jobs" element={<Jobs />} />
+
+        </Route>
+
+        <Route
+      path="*"
+      element={
+        <main style={{ padding: "1rem" }}>
+          <p>There's nothing here!</p>
+        </main>
+      }
+      />
+
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
