@@ -13,12 +13,17 @@ const Jobs = () => {
             setJobs(jobs)
         }
         fetchJobs();
-    },[filter])
+    },[filter]);
+
+    const handleSearch = (searchTerm) => {
+        setFilter(searchTerm)
+    }
+    
     if(!jobs)
         return(<h1>Loading......</h1>)
     return (
         <>
-            <SearchForm />
+            <SearchForm onSearch={handleSearch} />
             <JobList jobs={jobs} />
         </>
     )
