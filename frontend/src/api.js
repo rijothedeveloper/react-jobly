@@ -41,17 +41,35 @@ class JoblyApi {
   static async getCompanies(filter) {
     let res;
     if(filter==="")
-    res = await this.request(`companies`);
+      res = await this.request(`companies`);
     else
-    res = await this.request(`companies`,{name:filter});
+      res = await this.request(`companies`,{name:filter});
     return res.companies
   }
 
   /** Get details on a company by handle. */
 
   static async getCompany(handle) {
-    let res = await this.request(`companies/${handle}`);
+    const res = await this.request(`companies/${handle}`);
     return res.company;
+  }
+
+  /** Get alljobs  */
+
+  static async getJobs(filter) {
+    let res;
+    if(filter==="")
+      res = await this.request('jobs');
+    else
+      res = await this.request('jobs', {title: filter})
+      return res.jobs
+  }
+
+  /** Get a purticular job using job id */
+  
+  static async getJob(id) {
+    const res = await this.request(`jobs/${id}`)
+    return res.job;
   }
 
   // obviously, you'll add a lot here ...

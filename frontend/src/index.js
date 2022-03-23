@@ -14,6 +14,7 @@ import Profile from './profile/Profile'
 import Companies from './companies/Companies'
 import Jobs from './jobs/Jobs'
 import Company from './companies/Company'
+import Job from './jobs/Job';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -26,6 +27,7 @@ ReactDOM.render(
             <Route path="companies" element={<Companies />} />
             <Route path="companies/:company" element={<Company />} />
             <Route path="jobs" element={<Jobs />} />
+            <Route path="jobs/:id" element={<Job />} />
 
         </Route>
 
