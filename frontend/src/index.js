@@ -3,19 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { 
-  BrowserRouter,
-  Routes,
-  Route, 
-} from "react-router-dom";
-import Login from './login/Login';
-import SignUp from './signup/SignUp'
-import Profile from './profile/Profile'
-import Companies from './companies/Companies'
-import Jobs from './jobs/Jobs'
-import Company from './companies/Company'
-import Job from './jobs/Job';
-
+import { BrowserRouter } from "react-router-dom";
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
