@@ -72,6 +72,30 @@ class JoblyApi {
     return res.job;
   }
 
+  static async registerUser(newUser) {
+    try{
+      const res = await this.request('auth/register', newUser, 'post')
+      JoblyApi.token=res;
+      return res;
+    } catch(error) {
+      console.log(`api call error ${error}`);
+      return null;
+    }
+
+  }
+
+    static async login(user) {
+      try{
+        const res = await this.request('token', user, 'post')
+        JoblyApi.token=res;
+        return res;
+      } catch(error) {
+        console.log(`api call error ${error}`);
+        return null;
+      }
+    
+  }
+
   // obviously, you'll add a lot here ...
 }
 
