@@ -19,28 +19,7 @@ import Job from './jobs/Job';
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} > |{" "}
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<SignUp />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="companies" element={<Companies />} />
-            <Route path="companies/:company" element={<Company />} />
-            <Route path="jobs" element={<Jobs />} />
-            <Route path="jobs/:id" element={<Job />} />
-
-        </Route>
-
-        <Route
-      path="*"
-      element={
-        <main style={{ padding: "1rem" }}>
-          <p>There's nothing here!</p>
-        </main>
-      }
-      />
-
-      </Routes>
+      <App />
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
