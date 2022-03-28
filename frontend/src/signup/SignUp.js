@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import JoblyApi from '../api';
 import './signup.css'
-const SignUp = () => {
+const SignUp = ({signUp}) => {
     const [formData, setFormData] = useState({});
     const onFormChange = (event) => {
         setFormData({
@@ -12,7 +11,7 @@ const SignUp = () => {
 
     const onFormSubmit = (event) => {
         event.preventDefault();
-        JoblyApi.registerUser(formData);
+        signUp(formData)
     }
 
     return(

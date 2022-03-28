@@ -11,13 +11,35 @@ import Jobs from './jobs/Jobs'
 import Company from './companies/Company'
 import Job from './jobs/Job';
 import { Outlet, Link } from "react-router-dom";
+import JoblyApi from './api';
+import { useState } from 'react';
 
 function App() {
+
+  const [token, setToken] = useState()
+  async function signUp(newUser) {
+    try {
+      const newToken = await JoblyApi.registerUser(newUser);
+      setToken(newToken)
+    } catch(error) {
+
+    }
+  }
+
+  async function login(user) {
+    try {
+      const userToken = await JoblyApi.login(user);
+      setToken(userToken)
+    } catch(error) {
+
+    }
+  }
+
   return(
     <Routes>
         <Route path="/" element={<Layout />} > |{" "}
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<SignUp />} />
+            <Route path="login" element={<Login login={login}/>} />
+            <Route path="signup" element={<SignUp signUp={signUp} />} />
             <Route path="profile" element={<Profile />} />
             <Route path="companies" element={<Companies />} />
             <Route path="companies/:company" element={<Company />} />
