@@ -12,13 +12,14 @@ import Company from './companies/Company'
 import Job from './jobs/Job';
 import { Outlet, Link } from "react-router-dom";
 import JoblyApi from './api';
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 import Logout from './login/Logout';
 
 function App() {
 
   const [token, setToken] = useState()
   const [currentUser, setCurrentUser] = useState();
+  const currentUserContext = createContext(currentUser);
   let loggedinUser;
   async function signUp(newUser) {
     try {
@@ -53,29 +54,31 @@ function App() {
   }
 
   return(
-    <Routes>
-        <Route path="/" element={<Layout token={token}/>} > |{" "}
-            <Route path="login" element={<Login login={login}/>} />
-            <Route path="signup" element={<SignUp signUp={signUp} />} />
-            <Route path="logout" element={<Logout logout={logout} />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="companies" element={<Companies />} />
-            <Route path="companies/:company" element={<Company />} />
-            <Route path="jobs" element={<Jobs />} />
-            <Route path="jobs/:id" element={<Job />} />
+    <currentUserContext.Provider value={currentUser}>
+      <Routes>
+          <Route path="/" element={<Layout token={token}/>} > |{" "}
+              <Route path="login" element={<Login login={login}/>} />
+              <Route path="signup" element={<SignUp signUp={signUp} />} />
+              <Route path="logout" element={<Logout logout={logout} />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="companies" element={<Companies />} />
+              <Route path="companies/:company" element={<Company />} />
+              <Route path="jobs" element={<Jobs />} />
+              <Route path="jobs/:id" element={<Job />} />
 
-        </Route>
+          </Route>
 
-        <Route
-      path="*"
-      element={
-        <main style={{ padding: "1rem" }}>
-          <p>There's nothing here!</p>
-        </main>
-      }
-      />
+          <Route
+        path="*"
+        element={
+          <main style={{ padding: "1rem" }}>
+            <p>There's nothing here!</p>
+          </main>
+        }
+        />
 
-      </Routes>
+        </Routes>
+      </currentUserContext.Provider>
   )
 }
 
