@@ -17,7 +17,7 @@ import Logout from './login/Logout';
 
 function App() {
 
-  const [token, setToken] = useState()
+  const [token, setToken] = useState(localStorage.getItem("token"))
   const [currentUser, setCurrentUser] = useState();
   const currentUserContext = createContext(currentUser);
   let loggedinUser;
@@ -26,6 +26,7 @@ function App() {
       const newToken = await JoblyApi.registerUser(newUser);
       loggedinUser = newUser.username;
       setToken(newToken)
+      localStorage.setItem("token", newToken);
       getUser();
     } catch(error) {
 
@@ -37,6 +38,7 @@ function App() {
       const userToken = await JoblyApi.login(user);
       loggedinUser = user.username;
       setToken(userToken)
+      localStorage.setItem("token", userToken);
       getUser();
     } catch(error) {
 
@@ -46,6 +48,7 @@ function App() {
   function logout() {
     setToken(null);
     setCurrentUser(null);
+    localStorage.removeItem("token");
   }
 
   const getUser = async () => {
