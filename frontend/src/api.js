@@ -106,12 +106,24 @@ class JoblyApi {
     }
   }
 
+  static async editUser(username, user) {
+    try{
+      const res = await this.request(`users/${username}`, user, "patch")
+      return res.user;
+    } catch (error) {
+      console.log(`api call error ${error}`);
+      return null;
+    }
+  }
+
   // obviously, you'll add a lot here ...
 }
 
 // for now, put token ("testuser" / "password" on class)
-JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
-    "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
-    "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
+// JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
+//     "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
+//     "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
+
+    JoblyApi.token = localStorage.getItem("token");
 
     export default JoblyApi;

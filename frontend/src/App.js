@@ -12,7 +12,7 @@ import Company from './companies/Company'
 import Job from './jobs/Job';
 import { Outlet, Link } from "react-router-dom";
 import JoblyApi from './api';
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import Logout from './login/Logout';
 
 function App() {
@@ -20,13 +20,14 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem("token"))
   const [currentUser, setCurrentUser] = useState();
   const currentUserContext = createContext(currentUser);
-  let loggedinUser;
+  let loggedinUser = localStorage.getItem("loggedinUser");
   async function signUp(newUser) {
     try {
       const newToken = await JoblyApi.registerUser(newUser);
       loggedinUser = newUser.username;
       setToken(newToken)
       localStorage.setItem("token", newToken);
+      localStorage.setItem("loggedinUser", loggedinUser);
       getUser();
     } catch(error) {
 
@@ -39,6 +40,7 @@ function App() {
       loggedinUser = user.username;
       setToken(userToken)
       localStorage.setItem("token", userToken);
+      localStorage.setItem("loggedinUser", loggedinUser);
       getUser();
     } catch(error) {
 
@@ -56,6 +58,15 @@ function App() {
     setCurrentUser(user);
   }
 
+  const editUserInfo = async (editedUser) => {
+    const user = await JoblyApi.editUser(loggedinUser, editedUser);
+    setCurrentUser(user);
+  }
+
+  useEffect( () => {
+      getUser();
+  },[])
+
   return(
     <currentUserContext.Provider value={currentUser}>
       <Routes>
@@ -63,7 +74,7 @@ function App() {
               <Route path="login" element={<Login login={login}/>} />
               <Route path="signup" element={<SignUp signUp={signUp} />} />
               <Route path="logout" element={<Logout logout={logout} />} />
-              <Route path="profile" element={<Profile />} />
+              <Route path="profile" element={<Profile user={currentUser} saveUser={editUserInfo}/>} />
               <Route path="companies" element={<Companies />} />
               <Route path="companies/:company" element={<Company />} />
               <Route path="jobs" element={<Jobs />} />
