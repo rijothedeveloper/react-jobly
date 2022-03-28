@@ -19,10 +19,13 @@ function App() {
 
   const [token, setToken] = useState()
   const [currentUser, setCurrentUser] = useState();
+  let loggedinUser;
   async function signUp(newUser) {
     try {
       const newToken = await JoblyApi.registerUser(newUser);
+      loggedinUser = newUser.username;
       setToken(newToken)
+      getUser();
     } catch(error) {
 
     }
@@ -31,16 +34,23 @@ function App() {
   async function login(user) {
     try {
       const userToken = await JoblyApi.login(user);
+      loggedinUser = user.username;
       setToken(userToken)
+      getUser();
     } catch(error) {
 
     }
   }
 
   function logout() {
-    setToken(null)
+    setToken(null);
+    setCurrentUser(null);
   }
 
+  const getUser = async () => {
+    const user = await JoblyApi.getUser(loggedinUser);
+    setCurrentUser(user);
+  }
 
   return(
     <Routes>

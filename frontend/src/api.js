@@ -96,6 +96,16 @@ class JoblyApi {
     
   }
 
+  static async getUser(username) {
+    try{
+      const res = await this.request(`users/${username}`, {username: username})
+      return res.user;
+    } catch(error) {
+        console.log(`api call error ${error}`);
+        return null;
+    }
+  }
+
   // obviously, you'll add a lot here ...
 }
 
