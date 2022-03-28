@@ -13,10 +13,12 @@ import Job from './jobs/Job';
 import { Outlet, Link } from "react-router-dom";
 import JoblyApi from './api';
 import { useState } from 'react';
+import Logout from './login/Logout';
 
 function App() {
 
   const [token, setToken] = useState()
+  const [currentUser, setCurrentUser] = useState();
   async function signUp(newUser) {
     try {
       const newToken = await JoblyApi.registerUser(newUser);
@@ -35,11 +37,17 @@ function App() {
     }
   }
 
+  function logout() {
+    setToken(null)
+  }
+
+
   return(
     <Routes>
-        <Route path="/" element={<Layout />} > |{" "}
+        <Route path="/" element={<Layout token={token}/>} > |{" "}
             <Route path="login" element={<Login login={login}/>} />
             <Route path="signup" element={<SignUp signUp={signUp} />} />
+            <Route path="logout" element={<Logout logout={logout} />} />
             <Route path="profile" element={<Profile />} />
             <Route path="companies" element={<Companies />} />
             <Route path="companies/:company" element={<Company />} />
@@ -61,16 +69,21 @@ function App() {
   )
 }
 
-function Layout() {
+function Layout({token}) {
   return (
     <div className="App">
       <nav>
         <Link to="/" className='leftAlign'>Home</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/signup">Signup</Link>
-        <Link to="/companies">Companies</Link>
-        <Link to="/jobs">jobs</Link>
-        <Link to="/profile">MyProfile</Link>
+        { !token && <>
+          <Link to="/login">Login</Link>
+          <Link to="/signup">Signup</Link>
+        </>}
+        {token && <>
+          <Link to="/logout">Logout </Link>
+          <Link to="/companies">Companies</Link>
+          <Link to="/jobs">jobs</Link>
+          <Link to="/profile">MyProfile</Link>
+        </>}
       </nav>
       <Outlet />
     </div>
