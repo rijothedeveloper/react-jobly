@@ -1,6 +1,7 @@
 .jobList {
     display: flex;
     flex-direction: column;
+    width: 90vw;
 }
 
 .jobCard {
@@ -8,7 +9,20 @@
     margin: 10px;
 }
 
-a {
-    color: inherit; 
-    text-decoration: inherit; 
-  }
+.leftAlign {
+    float: left;
+    margin: 10px;
+}
+
+.applyButton {
+    position: relative;
+    height: 100%;
+}
+
+.applyButton button {
+    position:absolute;
+    right: 0;
+    padding: 10px;
+    color: white;
+    background-color: red;
+}

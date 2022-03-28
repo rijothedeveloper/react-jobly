@@ -116,6 +116,17 @@ class JoblyApi {
     }
   }
 
+  static async applyJob(username, jobId) {
+    try{
+      const res = await this.request(`users/${username}/jobs/${jobId}`, {}, "post")
+      return res.applied;
+    } catch (error) {
+      console.log(`api call error ${error}`);
+      return null;
+    }
+  }
+  
+
   // obviously, you'll add a lot here ...
 }
 

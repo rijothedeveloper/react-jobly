@@ -15,11 +15,13 @@ import JoblyApi from './api';
 import { createContext, useEffect, useState } from 'react';
 import Logout from './login/Logout';
 
+const currentUserContext = createContext();
+
 function App() {
 
   const [token, setToken] = useState(localStorage.getItem("token"))
   const [currentUser, setCurrentUser] = useState();
-  const currentUserContext = createContext(currentUser);
+  
   let loggedinUser = localStorage.getItem("loggedinUser");
   async function signUp(newUser) {
     try {
@@ -76,7 +78,7 @@ function App() {
               <Route path="logout" element={<Logout logout={logout} />} />
               <Route path="profile" element={<Profile user={currentUser} saveUser={editUserInfo}/>} />
               <Route path="companies" element={<Companies />} />
-              <Route path="companies/:company" element={<Company />} />
+              <Route path="companies/:companyHandle" element={<Company />} />
               <Route path="jobs" element={<Jobs />} />
               <Route path="jobs/:id" element={<Job />} />
 
@@ -117,4 +119,5 @@ function Layout({token}) {
   );
 }
 
+export {currentUserContext};
 export default App;
